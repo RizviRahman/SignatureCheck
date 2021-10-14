@@ -1,0 +1,35 @@
+{
+  "name": "signaturecheck",
+  "version": "1.0.0",
+  "description": "This project is developed to check clients signature",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RizviRahman/SignatureCheck.git"
+  },
+  "keywords": [
+    "signature",
+    "authentication",
+    "xlsx",
+    "file",
+    "read",
+    "image",
+    "read",
+    "send"
+  ],
+  "author": "Rizvi Rahman Omee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RizviRahman/SignatureCheck/issues"
+  },
+  "homepage": "https://github.com/RizviRahman/SignatureCheck#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "xlsx": "^0.16.9"
+  }
+}
