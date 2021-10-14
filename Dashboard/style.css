@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: signature;
+    src: url(BonheurRoyale-Regular.ttf);
+  }
+
+@font-face {
+    font-family: Spectral;
+    src: url(Spectral.ttf);
+  }
+
+@font-face {
+    font-family: Arvo;
+    src: url(Arvo-Regular.ttf);
+  }
+
+body{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainer{
+    background: #90f6d7;
+    
+}
+
+.head{
+    background: #9bf0e4;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.container{
+    background: #83cee0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer{
+    background: #7dace4;
+}
+
+/* .mainContainer div{
+    margin: 0 auto;
+} */
+
+.head ,.container, .footer{
+    width: 1100px;
+}
+
+.logout{
+    width: 190px;
+}
+
+
+.logo{
+    height: 60px;
+    padding-left: 20px;
+}
+
+.logo img{
+    height: 50px;
+}
+
+
+.rightBox{
+    width: 920px;
+}
+.rightBox img{
+    width: 900px;
+}
+
+
+
+.leftBox{
+    width: 170px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+input{
+    width: 157px; 
+    height: 30px;
+    font-size: 16pt;
+    padding: 2px 5px;
+    font-family: Spectral;
+}
+
+
+
+.sigFont{
+    font-family: signature;
+}
+
+tbody tr td{
+    padding-left: 10px;
+}
+
+.footer p{
+    text-align: center;
+}
+
+.table{
+    height: 40vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(27, 199, 56) rgb(50, 74, 212);
+}
+
+/* ::-webkit-scrollbar{
+    width: 5px;
+} */
+/* 
+.table::-webkit-scrollbar{
+    display: none;
+    width: 5px;
+}
+
+.table::-webkit-scrollbar-thumb{
+    background-color: cyan;
+}
+
+.table::-webkit-scrollbar-track{
+    background-color: darkcyan;
+} */
