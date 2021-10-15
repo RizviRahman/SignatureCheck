@@ -1,16 +1,11 @@
 const express = require('express');
-
 const sessions = require('express-session');
 
 const path = require('path');
 
+const { authUser } = require('./auth');
+
 const PORT = 4000;
-
-const { trader, traderNumber } = require('./trader');
-
-const { clientByTrader, allClient } = require('./clients');
-let clients;
-// console.log(trader['Omee'].pass);
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -38,82 +33,55 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('/',(req,res)=>{
     
-    if(req.session.authenticated){
-        if(trader[username].role==1){
-            clients = allClient();
+    const { clients, auth } = authUser(req,res);
+    // console.log(req.query.code)
+    if(auth){
+        if(clients.includes(req.query.code)){
+            res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: req.query.code });
         }
         else{
-            clients = clientByTrader(username);
+            res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: "welcome" });
         }
-        res.render('index',{ title: 'Home', name: req.session.user, clients: clients });
     }
     else{
-        res.render('login',{title: 'Login'});
+        res.render('login',{ title: 'Login' });
     }
 });
 
 
 app.post('/',(req,res)=>{
-    const { username, password } = req.body;
+    const { clients, auth } = authUser(req,res);
 
-    // console.log(req.body);
-    // console.log(username, password);
-    // console.log(trader[username]);
-
-    if(username && password){
-        if(req.session.authenticated){
-            // res.json(req.session);
-            if(trader[username].role==1){
-                clients = allClient();
-            }
-            else{
-                clients = clientByTrader(username);
-            }
-            res.render('index',{ title: 'Home', name: req.session.user, clients: clients });
+    if(auth){
+        if(clients.includes(req.query.code)){
+            res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: req.query.code });
         }
         else{
-            if(trader[username].pass==password){
-                req.session.authenticated = true;
-                req.session.user = username;
-                // res.json(req.session);
-
-                // client data cutted from here
-
-                if(trader[username].role==1){
-                    clients = allClient();
-                }
-                else{
-                    clients = clientByTrader(username);
-                }
-
-                res.render('index',{ title: 'Home', name: req.session.user, clients: clients });
-            }
-            else{
-                // res.status(403).json({ msg: 'Bad input'});
-                res.render('login',{title: 'Login'});
-            }   
+            res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: "welcome" });
         }
     }
-    else{
-        // res.status(403).json({ msg: 'Bad input'});
-        res.render('login',{title: 'Login'});
-    }
+    
 });
 
 
 app.get('/image',(req,res)=>{
-    const { sendImg } = require('./sendsig');
-    // console.log(req.query.code);
+    const { clients, auth } = authUser(req,res);
 
-    const code = req.query.code;
-
-
-    if(req.session.authenticated){
-        sendImg(code,res);
+    if(auth){
+        const { sendImg } = require('./sendsig');
+        const code = req.query.code;
+        if(clients.includes(code)){
+            sendImg(code,res);
+        }
+        else if(code == "welcome"){
+            sendImg(code,res);
+        }
+        else{
+            res.redirect('/');
+        }
     }
     else{
         res.render('login',{title: 'Login'});
-    }
+    } 
+
 });
-
-
