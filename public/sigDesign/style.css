@@ -87,7 +87,7 @@ input{
     font-family: Spectral;
 }
 .table{
-    height: 40%;
+    height: 75vh;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: rgb(27, 199, 56) rgb(50, 74, 212);

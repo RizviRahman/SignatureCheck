@@ -17,7 +17,7 @@ let publicPath = path.join(__dirname,'public');
 //serving public file
 app.use(express.static(publicPath));
 
-const oneMin = 1000 * 30 ;
+const oneMin = 1000 * 60 *60 ;
 
 //session middleware
 app.use(sessions({
@@ -60,7 +60,9 @@ app.post('/',(req,res)=>{
             res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: "welcome" });
         }
     }
-    
+    else{
+        res.render('login',{title: 'Login'});
+    } 
 });
 
 
@@ -84,4 +86,21 @@ app.get('/image',(req,res)=>{
         res.render('login',{title: 'Login'});
     } 
 
+});
+
+app.get('/logout',(req,res)=>{
+    // req.session.destroy((err) => {
+    //     if(err) {
+    //         return console.log(err);
+    //     }
+    //     res.redirect('/');
+    // });
+    // req.session.authenticated = false;
+    // req.session.user = null;
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
 });
