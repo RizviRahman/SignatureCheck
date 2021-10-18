@@ -1,77 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>RBSL | <%= title %></title>
-    <link rel="stylesheet" href="bootstrap.min.css"/>
-    <link rel="stylesheet" href="style.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "icon" href = "icon.png" type = "image/x-icon">
-    <link rel="stylesheet" href="font-awesome/css/all.min.css"/>
-    
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="search-input">
-        <a href="" target="_blank" hidden></a>
-        <input type="text" placeholder="Type to search..">
-        <div class="autocom-box">
-          <!-- here list are inserted from javascript -->
+    <link rel="stylesheet" href="sigDesign/src/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="sigDesign/style.css">
+    <title>RBSL | <%= title %></title>
+</head>
+<body>
+    <div class="main">
+        <div class="box header">
+            <div class="logo"><a href=""><img src="LOGO.png" alt=""></a></div>
+            <div class="msg">Welcome, Trader!</div>
+            <div class="logout">
+                <a href="">Logout</a>  <!--<i class="fa fa-sign-out"></i>-->
+            </div>
         </div>
-        <div class="icon"><i class="fas fa-search"></i></div>
-      </div>
+
+        <div class="bodyBox">
+            <div class="leftBox">
+                <div class="search">
+                    <input type="text" id="myInput" placeholder="Search Code" onkeyup="searchFun()">
+                </div>
+
+                
+                <div class="table">
+                    <table>
+                        <tbody id="myTable">
+                            <% clients.forEach(element => { %>
+                                <tr>
+                                    <td><a href=<%= `http://localhost:4000/?code=${element}`%>><%= element%></a></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="rightBox">
+                <h2>Client Name - status[active/closed]</h2>
+                <img src=<%= `http://localhost:4000/image?code=${imgCode}`%> alt="Responsive image">
+                <!-- <img src="src/img/flower.jpg" alt="img"> -->
+            </div>
+        </div>
+        <div class="box foot">&copy;Rizvi Rahman Omee</div>
     </div>
 
 
-
-    <div class="container d-flex">
-      <ul class="list-group">
-        <% clients.forEach(element => { %>
-          <li class="list-group-item"><a href=<%= `http://localhost:4000/?code=${element}`%>><%= element%></a></li>
-        <% }); %>
-      </ul>
-      
-      <div class="container imgBox">
-        <img src=<%= `http://localhost:4000/image?code=${imgCode}`%> style="width: 900px; height: fit-content; display: block; padding-left: 10px;" alt="Responsive image">
-      </div>
-      
-    </div>
-
-
-
-
-    
-
     <script>
-      let suggestions = <%- JSON.stringify(clients) %>;
-   </script>
-    <script src="js/script.js"></script>
+        const searchFun = () =>{
+            let filter = document.getElementById('myInput').value.toUpperCase();
+            console.log(filter);
 
+            let myTable = document.getElementById('myTable');
 
-    <script>
-      const searchFun = () =>{
-        let filter = document.getElementById('myInput').value.toUpperCase();
+            let tr = myTable.getElementsByTagName('tr');
 
-        let myTable = document.getElementById('myTable');
+            for(let i = 0; i < tr.length; i++){
+                let td = tr[i].getElementsByTagName('td')[0];
+                console.log(td);
+                if(td){
+                    let textvalue = td.textContent || td.innerHTML;
 
-        let tr = myTable.getElementsByTagName('tr');
-
-        for(let i = 0; i < tr.length; i++){
-          let td = tr[i].getElementsByTagName('td')[0];
-
-          if(td){
-            let textvalue = td.textContent || td.innerHTML;
-
-            if(textvalue.toLocaleUpperCase().indexOf(filter) > -1){
-              tr[i].style.display = "";
+                    if(textvalue.toLocaleUpperCase().indexOf(filter) > -1){
+                        tr[i].style.display = "";
+                    }
+                    else{
+                        tr[i].style.display = "none";
+                    }
+                }
             }
-            else{
-              tr[i].style.display = "none";
-            }
-          }
         }
-      }
     </script>
-
-  </body>
+</body>
 </html>

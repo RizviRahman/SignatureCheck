@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>RBSL | <%= title %></title>
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "icon" href = "icon.png" type = "image/x-icon">
+    <link rel="stylesheet" href="font-awesome/css/all.min.css"/>
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="search-input">
+        <a href="" target="_blank" hidden></a>
+        <input type="text" placeholder="Type to search..">
+        <div class="autocom-box">
+          <!-- here list are inserted from javascript -->
+        </div>
+        <div class="icon"><i class="fas fa-search"></i></div>
+      </div>
+    </div>
+
+
+
+    <div class="container d-flex">
+      <ul class="list-group">
+        <% clients.forEach(element => { %>
+          <li class="list-group-item"><a href=<%= `http://localhost:4000/?code=${element}`%>><%= element%></a></li>
+        <% }); %>
+      </ul>
+      
+      <div class="container imgBox">
+        <img src=<%= `http://localhost:4000/image?code=${imgCode}`%> style="width: 900px; height: fit-content; display: block; padding-left: 10px;" alt="Responsive image">
+      </div>
+      
+    </div>
+
+
+
+
+    
+
+    <script>
+      let suggestions = <%- JSON.stringify(clients) %>;
+   </script>
+    <script src="js/script.js"></script>
+
+
+    <script>
+      const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(let i = 0; i < tr.length; i++){
+          let td = tr[i].getElementsByTagName('td')[0];
+
+          if(td){
+            let textvalue = td.textContent || td.innerHTML;
+
+            if(textvalue.toLocaleUpperCase().indexOf(filter) > -1){
+              tr[i].style.display = "";
+            }
+            else{
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+
+  </body>
+</html>
