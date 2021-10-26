@@ -9,7 +9,7 @@ const PORT = 4000;
 
 const app = express();
 app.set('view engine', 'ejs');
-app.listen(PORT);
+
 
 
 let publicPath = path.join(__dirname,'public');
@@ -36,7 +36,7 @@ app.get('/',(req,res)=>{
     const { clients, auth } = authUser(req,res);
     // console.log(req.query.code)
     if(auth){
-        if(clients.includes(req.query.code)){
+        if(clients[req.query.code]){
             res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: req.query.code });
         }
         else{
@@ -53,7 +53,7 @@ app.post('/',(req,res)=>{
     const { clients, auth } = authUser(req,res);
 
     if(auth){
-        if(clients.includes(req.query.code)){
+        if(clients[req.query.code]){
             res.render('index',{ title: 'Home', name: req.session.user, clients: clients, imgCode: req.query.code });
         }
         else{
@@ -72,7 +72,7 @@ app.get('/image',(req,res)=>{
     if(auth){
         const { sendImg } = require('./sendsig');
         const code = req.query.code;
-        if(clients.includes(code)){
+        if(clients[req.query.code]){
             sendImg(code,res);
         }
         else if(code == "welcome"){
@@ -103,4 +103,9 @@ app.get('/logout',(req,res)=>{
         }
         res.redirect('/');
     });
+});
+
+
+app.listen(PORT, () => {
+    console.log(`App listening at http://localhost:${PORT}`);
 });

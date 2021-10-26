@@ -29,18 +29,20 @@
                 <div class="table">
                     <table>
                         <tbody id="myTable">
-                            <% clients.forEach(element => { %>
+                            <% for(client in clients){ %>
                                 <tr>
-                                    <td><a href=<%= `http://localhost:4000/?code=${element}`%>><%= element%></a></td>
+                                    <td><a href=<%= `http://localhost:4000/?code=${client}`%>><%= client %></a></td>
                                 </tr>
-                            <% }); %>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div class="rightBox">
-                <h2>Client Name - status[active/closed]</h2>
+                <% if(clients[imgCode]){ %>
+                    <h2><%= imgCode %> - <%= clients[imgCode].name%> - <%= clients[imgCode].status %></h2>
+                <% } %>
                 <img src=<%= `http://localhost:4000/image?code=${imgCode}`%> alt="Responsive image">
                 <!-- <img src="src/img/flower.jpg" alt="img"> -->
             </div>
